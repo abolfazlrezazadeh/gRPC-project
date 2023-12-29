@@ -1,7 +1,7 @@
 const { default: mongoose } = require("mongoose");
-
+const dbUrl = "mongodb://127.0.0.1:27017/gRPC"
 module.exports = mongoose
-  .connect("mongodb://127.0.0.1:27017/gRPC")
+  .connect(dbUrl)
   .then(() => {
     console.log("connected to db");
   })
