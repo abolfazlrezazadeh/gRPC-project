@@ -7,10 +7,26 @@ const protoPath = path.join(__dirname, "..", "..", "proto", "product.proto");
 const productProto = protoLoader.loadSync(protoPath);
 // extract package
 const { productPackage } = grpc.loadPackageDefinition(productProto);
-const productClient = new productPackage.productServices(productServerUrl,grpc.credentials.createInsecure());
+const productClient = new productPackage.productServices(
+  productServerUrl,
+  grpc.credentials.createInsecure()
+);
 
-async function listOfProduct(req, res, next) {}
-async function getProduct(req, res, next) {}
-async function createProduct(req, res, next) {}
-async function updateProduct(req, res, next) {}
-async function deleteProduct(req, res, next) {}
+function listOfProduct(req, res, next) {
+    productClient.listOfProduct(null , (err, data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+}
+function getProduct(req, res, next) {}
+function createProduct(req, res, next) {}
+function updateProduct(req, res, next) {}
+function deleteProduct(req, res, next) {}
+
+module.exports = {
+  listOfProduct,
+  getProduct,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+};
