@@ -18,7 +18,7 @@ async function listOfProduct(req, res, next) {
       if (err) {
         console.log(err.message);
         return res.json({
-          error : err,
+          error: err,
         });
       }
       return res.json(data);
@@ -27,8 +27,25 @@ async function listOfProduct(req, res, next) {
     console.log(error);
   }
 }
+async function createProduct(req, res, next) {
+  try {
+    // we can get data from body this is a Practice project
+    const { title, price } = req.query;
+    await productClient.createProduct({ title, price }, (err, data) => {
+      if (err) {
+        console.log(err.message);
+        return res.json({
+          error: err,
+        });
+      }
+      return res.json({
+        status : 201,
+        data : data
+      });
+    });
+  } catch (error) {}
+}
 function getProduct(req, res, next) {}
-function createProduct(req, res, next) {}
 function updateProduct(req, res, next) {}
 function deleteProduct(req, res, next) {}
 
