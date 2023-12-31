@@ -10,7 +10,18 @@ async function listOfProduct(call, callback) {
   }
 }
 async function getProduct(call, callback) {}
-async function createProduct(call, callback) {}
+async function createProduct(call, callback) {
+  try {
+    const { title, price } = call.request;
+    //some actions about validation
+    const result = await productModel.create({ title, price });
+    // error handling actions
+    if (!result) callback({ error: "server error please try again" }, null);
+    callback(null, { status: "product created successfullly" });
+  } catch (error) {
+    callback(error, null);
+  }
+}
 async function updateProduct(call, callback) {}
 async function deleteProduct(call, callback) {}
 
