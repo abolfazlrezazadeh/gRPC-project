@@ -14,27 +14,40 @@ const protoLoader = require("@grpc/proto-loader");
 const path = require("path");
 const protoPath = path.join(__dirname, "..", "..", "proto", "product.proto");
 // load proto file
-const productProto = protoLoader.loadSync(protoPath);
+const productProto = protoLoader.loadSync(protoPath, {
+  keepCase: true,
+  longs: String,
+  enums: String,
+  defaults: true,
+  oneofs: true,
+});
 // extract package
 const { productPackage } = grpc.loadPackageDefinition(productProto);
 // productPackage service
 function main() {
-  const server = new grpc.Server();
-  server.addService(productPackage.productServices.service, {
-    listOfProduct,
-    getProduct,
-    createProduct,
-    updateProduct,
-    deleteProduct,
-  });
-  // start server
-  server.bindAsync(
-    productServerUrl,
-    grpc.ServerCredentials.createInsecure(),
-    (err, port) => {
-      if (err) return console.log(err.message);
-      console.log(`Product serve eunning on port : ${port}`);
-    }
-  );
+  try {
+    const server = new grpc.Server();
+    server.addService(productPackage.productServices.service, {
+      listOfProduct,
+      getProduct,
+      createProduct,
+      updateProduct,
+      deleteProduct,
+    });
+    // start server
+    server.bindAsync(
+      productServerUrl,
+      grpc.ServerCredentials.createInsecure(),
+      (err, port) => {
+        if (err) return console.log(err.message);
+        console.log(
+          `Product server running on port : http://localhost:${port}`
+        );
+        server.start();
+      }
+    );
+  } catch (error) {
+    console.log(error);
+  }
 }
 main();

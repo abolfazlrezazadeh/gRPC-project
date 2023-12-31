@@ -5,6 +5,7 @@ async function listOfProduct(call, callback) {
     const products = await productModel.find({});
     callback(null, { products });
   } catch (error) {
+    console.log(error);
     callback(error, null);
   }
 }

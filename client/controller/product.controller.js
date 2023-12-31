@@ -12,11 +12,20 @@ const productClient = new productPackage.productServices(
   grpc.credentials.createInsecure()
 );
 
-function listOfProduct(req, res, next) {
-    productClient.listOfProduct(null , (err, data)=>{
-        if(err) return res.json(err)
-        return res.json(data)
-    })
+async function listOfProduct(req, res, next) {
+  try {
+    await productClient.listOfProduct(null, (err, data) => {
+      if (err) {
+        console.log(err.message);
+        return res.json({
+          error : err,
+        });
+      }
+      return res.json(data);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }
 function getProduct(req, res, next) {}
 function createProduct(req, res, next) {}
