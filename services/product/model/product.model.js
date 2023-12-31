@@ -1,4 +1,4 @@
-const { default: mongoose, model } = require("mongoose");
+const { default: mongoose } = require("mongoose");
 
 const productSchema = new mongoose.Schema({
   id: { type: Number },
@@ -6,20 +6,21 @@ const productSchema = new mongoose.Schema({
   price: { type: String },
 });
 
-productSchema.pre("save", function (next) {
-  // this == productSchema
-  const self = this;
-  /*
-    We get the number of documents in the product model along with a function with ``err'' and ``data'' parameters.
-  */
-  self.constructor.count(async function (err, data) {
-    if (err) return next(err);
-    // we can gets the number of products
-    model.set({ id: data + 1 });
+productSchema.pre("save", async function (next) {
+  try {
+    // this == productSchema
+    const self = this;
+    /*
+      We get the number of documents in the product model along with a function with ``err'' and ``data'' parameters.
+    */
+    const count = await self.constructor.countDocuments();
+    self.set({ id: count + 1 });
     next();
-  });
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = {
-    productModel : mongoose.model("Product" , productSchema)
-}
+  productModel: mongoose.model("Product", productSchema),
+};

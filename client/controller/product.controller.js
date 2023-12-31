@@ -29,7 +29,7 @@ async function listOfProduct(req, res, next) {
 }
 async function createProduct(req, res, next) {
   try {
-    // we can get data from body this is a Practice project
+    // we can get data from body but this is a Practice project
     const { title, price } = req.query;
     await productClient.createProduct({ title, price }, (err, data) => {
       if (err) {
