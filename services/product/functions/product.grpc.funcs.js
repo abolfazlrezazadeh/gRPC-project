@@ -34,7 +34,18 @@ async function createProduct(call, callback) {
   }
 }
 async function updateProduct(call, callback) {}
-async function deleteProduct(call, callback) {}
+async function deleteProduct(call, callback) {
+  try {
+    const { id } = call.request;
+    // some actions about validation of id
+    const product = await productModel.deleteOne({ id });
+    if (!product) return callback({ error: "try again" }, null);
+    callback(null, product);
+  } catch (error) {
+    console.log(error);
+    callback(error, null);
+  }
+}
 
 module.exports = {
   listOfProduct,
