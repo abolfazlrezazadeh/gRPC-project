@@ -11,13 +11,14 @@ async function listOfProduct(call, callback) {
 }
 async function getProduct(call, callback) {
   try {
-    const {id} = call.request;
+    const { id } = call.request;
     // some actions about validation of id
-    const products = await productModel.findById({id})
-    if(!products) return callback({error : "product not found"}, null)
-    callback(null, {products})
+    const product = await productModel.findOne({ id });
+    if (!product) return callback({ error: "product not found" }, null);
+    callback(null, product);
   } catch (error) {
-    callback(error, null)
+    console.log(error);
+    callback(error, null);
   }
 }
 async function createProduct(call, callback) {

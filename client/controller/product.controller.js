@@ -43,17 +43,23 @@ async function createProduct(req, res, next) {
         data: data,
       });
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 }
 async function getProduct(req, res, next) {
-  const { id } = req.query;
-  await productClient.getProduct({ id }, (err, data) => {
-    if (err) return res.json({ err: err });
-    return res.json({
-      status: 200,
-      data: data,
+  try {
+    const { id } = req.params;
+    await productClient.getProduct({ id }, (err, data) => {
+      if (err) return res.json({ error: err });
+      return res.json({
+        status: 200,
+        data: data,
+      });
     });
-  });
+  } catch (error) {
+    console.log(error);
+  }
 }
 function updateProduct(req, res, next) {}
 function deleteProduct(req, res, next) {}
