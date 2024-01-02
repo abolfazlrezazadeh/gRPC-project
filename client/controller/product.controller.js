@@ -61,7 +61,20 @@ async function getProduct(req, res, next) {
     console.log(error);
   }
 }
-function updateProduct(req, res, next) {}
+async function updateProduct(req, res, next) {
+  try {
+    const data = req.params;
+    await productClient.updateProduct(data, (err, data) => {
+      if (err) return res.json({ error: err });
+      return res.json({
+        status: 200,
+        data: data,
+      });
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
 async function deleteProduct(req, res, next) {
   try {
     const { id } = req.params;
