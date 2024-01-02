@@ -39,13 +39,22 @@ async function createProduct(req, res, next) {
         });
       }
       return res.json({
-        status : 201,
-        data : data
+        status: 201,
+        data: data,
       });
     });
   } catch (error) {}
 }
-function getProduct(req, res, next) {}
+async function getProduct(req, res, next) {
+  const { id } = req.query;
+  await productClient.getProduct({ id }, (err, data) => {
+    if (err) return res.json({ err: err });
+    return res.json({
+      status: 200,
+      data: data,
+    });
+  });
+}
 function updateProduct(req, res, next) {}
 function deleteProduct(req, res, next) {}
 
