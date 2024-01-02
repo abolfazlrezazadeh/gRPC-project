@@ -63,7 +63,8 @@ async function getProduct(req, res, next) {
 }
 async function updateProduct(req, res, next) {
   try {
-    const data = req.params;
+    const data = req.query;
+    console.log(data);
     await productClient.updateProduct(data, (err, data) => {
       if (err) return res.json({ error: err });
       return res.json({

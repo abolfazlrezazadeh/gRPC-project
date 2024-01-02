@@ -33,14 +33,26 @@ async function createProduct(call, callback) {
     callback(error, null);
   }
 }
-async function updateProduct(call, callback) {}
+async function updateProduct(call, callback) {
+  try {
+    const { id } = call.request;
+    const data = call.request;
+    delete data.id;
+    const product = await productModel.updateOne({ id }, { $set: data });
+    if (!product.modifiedCount)
+      callback({ error: "updating failed please try again or later" });
+    callback(null, { status: "update sucessfuly" });
+  } catch (error) {
+    console.log(error);
+  }
+}
 async function deleteProduct(call, callback) {
   try {
     const { id } = call.request;
     // some actions about validation of id
     const product = await productModel.deleteOne({ id });
     if (!product) return callback({ error: "try again" }, null);
-    callback(null, product);
+    callback(null, { status: "delete sucessfuly" });
   } catch (error) {
     console.log(error);
     callback(error, null);
