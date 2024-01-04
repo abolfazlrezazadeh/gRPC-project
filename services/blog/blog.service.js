@@ -1,3 +1,4 @@
+require("./config/db.config")
 const blogServerUrl = "localhost:4002";
 const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
