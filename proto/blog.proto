@@ -1,5 +1,5 @@
 syntax= "proto3"; 
-
+import "public.proto";
 package blogPackage;
 
 message blog {
@@ -21,15 +21,10 @@ message newBlog {
     string price = 2;
 }
 
-message empty {}
-message result{
-    string status = 1;
-}
-
 service blogServices {
-    rpc listOfblog (empty) returns (blogList);
+    rpc listOfblog (publicPackage.empty) returns (blogList);
     rpc getblog (blogId) returns (blog);
-    rpc createblog (newBlog) returns (result);
-    rpc updateblog (blog) returns (result);
-    rpc deleteblog (blogId) returns (result);
+    rpc createblog (newBlog) returns (publicPackage.result);
+    rpc updateblog (blog) returns (publicPackage.result);
+    rpc deleteblog (blogId) returns (publicPackage.result);
 }

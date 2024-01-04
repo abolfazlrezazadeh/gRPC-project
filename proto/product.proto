@@ -1,5 +1,5 @@
 syntax= "proto3"; 
-
+import "public.proto";
 package productPackage;
 
 message product {
@@ -21,15 +21,10 @@ message newProduct {
     string price = 2;
 }
 
-message empty {}
-message result{
-    string status = 1;
-}
-
 service productServices {
-    rpc listOfProduct (empty) returns (productList);
+    rpc listOfProduct (publicPackage.empty) returns (productList);
     rpc getProduct (productId) returns (product);
-    rpc createProduct (newProduct) returns (result);
-    rpc updateProduct (product) returns (result);
-    rpc deleteProduct (productId) returns (result);
+    rpc createProduct (newProduct) returns (publicPackage.result);
+    rpc updateProduct (product) returns (publicPackage.result);
+    rpc deleteProduct (productId) returns (publicPackage.result);
 }
