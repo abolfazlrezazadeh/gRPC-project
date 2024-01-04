@@ -2,7 +2,14 @@ const productServerUrl = "localhost:4001";
 const grpc = require("@grpc/grpc-js");
 const protoLoader = require("@grpc/proto-loader");
 const path = require("path");
-const protoPath = path.join(__dirname, "..", "..", "proto", "product.proto");
+const protoPath = path.join(
+  __dirname,
+  "..",
+  "..",
+  "..",
+  "proto",
+  "product.proto"
+);
 // load proto file
 const productProto = protoLoader.loadSync(protoPath);
 // extract package
