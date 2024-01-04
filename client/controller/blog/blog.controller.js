@@ -17,6 +17,8 @@ const blogClient = new blogPackage.blogServices(
   blogServerUrl,
   grpc.credentials.createInsecure()
 );
+// i do all of them in productController 
+// It is a practice project 
 async function getAllBlogs(req, res, next) {
   try {
   } catch (error) {
