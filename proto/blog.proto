@@ -5,7 +5,7 @@ package blogPackage;
 message blog {
     int32 id = 1;
     string title = 2;
-    string price = 3;
+    string text = 3;
 }
 
 message blogId {
@@ -18,7 +18,7 @@ message blogList {
 
 message newBlog {
     string title = 1;
-    string price = 2;
+    string text = 2;
 }
 
 service blogServices {
